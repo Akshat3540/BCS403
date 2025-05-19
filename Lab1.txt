@@ -1,0 +1,49 @@
+Step 1: Creating a Table (Keep Autocommit turned Off)
+
+CREATE TABLE Employee (
+EMPNO NUMBER,
+ENAME VARCHAR2(50),
+JOB VARCHAR2(50),
+MANAGER_NO NUMBER,
+SAL NUMBER,
+COMMISSION NUMBER
+);
+[If Table already exists, use 
+DROP TABLE <table_name>
+to delete table]
+
+Output: Table Created.
+
+Step 2: Inserting 3 records into the table (Execute each INSERT query one-by-one)
+INSERT INTO Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL,COMMISSION)
+VALUES (1, 'John Doe', 'Manager', NULL, 5000, 1000);
+
+Output: 1 row(s) inserted.
+
+INSERT INTO Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL, COMMISSION)
+VALUES (2, 'Jane Smith', 'Clerk', 1, 3000, NULL);
+
+Output: 1 row(s) inserted.
+
+INSERT INTO Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL, COMMISSION)
+VALUES (3, 'Alice Johnson', 'Analyst', 1, 4000, 500);
+
+Output: 1 row(s) inserted.
+
+Step 3: (ROLLBACK is used to undo the last change made, autocommit should be turned off before query execution)
+ROLLBACK;
+SELECT * FROM Employee;
+
+Output: No Data Found
+
+Step 4: Adding Primary Constraint and Not Null constraint (Basically adding rules to the database, execute each ALTER statement one-by-one)
+
+ALTER TABLE Employee ADD CONSTRAINT PK_Employee PRIMARY KEY (EMPNO);
+[If "ORA-02264: name already used by an existing constraint" error, change constraint name to something else, example:
+ALTER TABLE Employee ADD CONSTRAINT PK_Employee1 PRIMARY KEY (EMPNO);]
+
+Output: Table Altered
+
+ALTER TABLE Employee MODIFY (ENAME NOT NULL, JOB NOT NULL, SAL NOT NULL);
+
+Output: Output: Table Altered
