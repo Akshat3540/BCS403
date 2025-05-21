@@ -1,0 +1,40 @@
+Step 1:
+
+CREATE TABLE Employee (
+    E_id NUMBER PRIMARY KEY,
+    E_name VARCHAR2(100),
+    Age NUMBER,
+    Salary NUMBER
+);
+
+Step 2:
+
+INSERT INTO EMPLOYEE VALUES (1, 'Braham Kumar', 30, 50000);
+INSERT INTO EMPLOYEE VALUES (2, 'Shubham', 32, 55000);
+INSERT INTO EMPLOYEE VALUES (3, 'Bikash', 28, 48000);
+
+Step 3:
+
+DECLARE
+
+    v_E_id Employee.E_id%TYPE;
+    v_E_name Employee.E_name%TYPE;
+    v_Age Employee.Age%TYPE;
+    v_Salary Employee.Salary%TYPE;
+    
+    CURSOR employee_cursor IS
+        SELECT E_id, E_name, Age, Salary FROM Employee;
+BEGIN
+
+    OPEN employee_cursor;
+    
+    LOOP
+        FETCH employee_cursor INTO v_E_id, v_E_name, v_Age, v_Salary;
+        
+        EXIT WHEN employee_cursor%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE('E_id: ' || v_E_id || ', E_name: ' || v_E_name || ', Age: ' || v_Age || ', Salary: ' || v_Salary);
+    END LOOP;
+    
+    CLOSE employee_cursor;
+END;
