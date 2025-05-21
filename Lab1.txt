@@ -47,3 +47,13 @@ Output: Table Altered
 ALTER TABLE Employee MODIFY (ENAME NOT NULL, JOB NOT NULL, SAL NOT NULL);
 
 Output: Output: Table Altered
+
+Step 5:
+(Attempt to insert a record with a NULL value in a NOT NULL column (ENAME))
+
+INSERT INTO Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL, COMMISSION)
+VALUES (4, NULL, 'Tester', 2, 3000, 200);
+
+(This insert will fail due to the NOT NULL constraint on ENAME
+Check the result by querying the table)
+SELECT * FROM Employee;
