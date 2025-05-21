@@ -1,0 +1,51 @@
+Step 1:
+
+CREATE TABLE CUSTOMERS (
+    ID NUMBER PRIMARY KEY,
+    NAME VARCHAR2(100),
+    AGE NUMBER,
+    ADDRESS VARCHAR2(200),
+    SALARY NUMBER
+);
+Step 2:
+
+CREATE OR REPLACE TRIGGER salary_difference_trigger
+AFTER INSERT OR UPDATE OR DELETE
+ON CUSTOMERS
+FOR EACH ROW
+DECLARE
+    v_old_salary CUSTOMERS.SALARY%TYPE;
+    v_new_salary CUSTOMERS.SALARY%TYPE;
+    v_salary_diff CUSTOMERS.SALARY%TYPE;
+BEGIN
+    IF INSERTING THEN
+        v_old_salary := 0;
+        v_new_salary := :NEW.SALARY;
+    ELSIF UPDATING THEN
+        v_old_salary := :OLD.SALARY;
+        v_new_salary := :NEW.SALARY;
+    ELSIF DELETING THEN
+        v_old_salary := :OLD.SALARY;
+        v_new_salary := 0;
+    END IF;
+
+    v_salary_diff := v_new_salary - v_old_salary;
+
+    DBMS_OUTPUT.PUT_LINE('Salary difference: ' || v_salary_diff);
+END;
+
+Step 3:
+
+INSERT INTO CUSTOMERS 
+VALUES (1, 'Braham Kumar', 30, 'Bangalore', 8000);
+
+Step 4:
+
+UPDATE CUSTOMERS
+SET SALARY = 6000
+WHERE ID = 1;
+
+Step 5:
+
+DELETE FROM CUSTOMERS
+WHERE ID = 1;
